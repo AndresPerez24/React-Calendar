@@ -13,9 +13,10 @@ export const getMonthsData = () => {
     const days = Array.from({ length: numberOfItems }, (v, i) => {
       const number = i - startingDayOfWeek + 1;
       return {
+        counter: 0,
         id: `${monthNumber}-${number}`,
         number: number > 0 && number <= numberOfDays ? number : 0,
-        reminders: []
+        reminders: [],
       };
     });
     return {

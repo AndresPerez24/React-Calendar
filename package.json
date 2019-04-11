@@ -6,6 +6,7 @@
     "antd": "^3.16.2",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
+    "node-sass": "^4.11.0",
     "rc-color-picker": "^1.2.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
