@@ -22,3 +22,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.ant-btn[disabled] {
+  background: transparent;
+  border: none;
+  &:hover {
+    background: transparent;
+    border: none;
+  }
+}

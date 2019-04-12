@@ -137,3 +137,14 @@ export const IconStyled = styled(Icon)`
   color: white;
   font-size: 20px;
 `;
+
+export const ButtonStyled = styled(Button)`
+  background: transparent;
+  border: none;
+  &:hover,
+  &:focus,
+  &:active {
+    background: transparent;
+    border: none;
+  }
+`;

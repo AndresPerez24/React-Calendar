@@ -12,7 +12,8 @@ import {
   Calendar,
   Header,
   CalendarContainer,
-  IconStyled
+  IconStyled,
+  ButtonStyled
 } from "../../styles";
 
 const daysOfWeek = [
@@ -50,17 +51,20 @@ class App extends Component {
       <CalendarContainer>
         <Container>
           <Nav>
-            <IconStyled
-              type="left"
+            <ButtonStyled
               disabled={month.number === 1}
               onClick={() => updateSelectedMonth(month.number - 1)}
-            />
+            >
+              <IconStyled type="left" />
+            </ButtonStyled>
+
             <Month>{month.name}</Month>
-            <IconStyled
-              type="right"
+            <ButtonStyled
               disabled={month.number === 12}
               onClick={() => updateSelectedMonth(month.number + 1)}
-            />
+            >
+              <IconStyled type="right" />
+            </ButtonStyled>
           </Nav>
           <Header>
             {daysOfWeek.map(day => (
