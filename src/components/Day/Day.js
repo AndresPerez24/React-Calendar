@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import { connect } from "react-redux";
-import { Button, Icon } from "antd";
+
+import { Icon } from "antd";
 import moment from "moment";
 import {
   DayBlock,
@@ -9,19 +9,28 @@ import {
   Reminder,
   Description,
   DayHeader,
-  ReminderContainer
-} from "../styles";
-import { deleteReminder } from "../actions/calendarAction";
+  ReminderContainer,
+  ButtonModal
+} from "../../styles";
+import PropTypes from "prop-types";
 
-function Day({ data, showModal, deleteReminder }) {
+const Day = props => {
+  const { data, showModal, deleteReminder } = props;
   const { number, reminders } = data;
+
+  const onClickDescription = reminder => {
+    const { selectReminder, showModal, data } = props;
+    selectReminder(reminder);
+    showModal(data);
+  };
+
   return (
     <DayBlock type="primary">
       {!!number && (
         <Fragment>
           <DayHeader>
             <Number>{number}</Number>
-            <Button
+            <ButtonModal
               onClick={() => showModal(data)}
               type="primary"
               shape="circle"
@@ -32,12 +41,12 @@ function Day({ data, showModal, deleteReminder }) {
           <ReminderContainer>
             {reminders.map(({ text, time, color, id }) => (
               <Reminder key={id} style={{ backgroundColor: color }}>
-                <div>
-                  <Description>
-                    {moment(time).format("hh:mm")}
-                    {" - "} {text}
-                  </Description>
-                </div>
+                <Description
+                  onClick={() => onClickDescription({ text, time, color, id })}
+                >
+                  {moment(time).format("hh:mm")}
+                  {" - "} {text}
+                </Description>
                 <DeleteReminder onClick={() => deleteReminder(id)}>
                   <Icon type="close" />
                 </DeleteReminder>
@@ -48,13 +57,13 @@ function Day({ data, showModal, deleteReminder }) {
       )}
     </DayBlock>
   );
-}
+};
 
-const mapDispatchToProps = dispatch => ({
-  deleteReminder: payload => dispatch(deleteReminder(payload))
-});
+Day.propTypes = {
+  data: PropTypes.object,
+  showModal: PropTypes.func,
+  deleteReminder: PropTypes.func,
+  selectReminder: PropTypes.func
+};
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(Day);
+export default Day;

@@ -2,16 +2,19 @@ import { getMonthsData } from "../utils";
 import moment from "moment";
 import sortBy from "lodash/sortBy";
 import {
-  UPDATE_SELECTED_MONTH,
   ADD_REMINDER,
+  DELETE_REMINDER,
   SELECT_DAY,
-  DELETE_REMINDER
+  SELECT_REMINDER,
+  UPDATE_REMINDER,
+  UPDATE_SELECTED_MONTH
 } from "../actions/calendarAction";
 
 const initialState = {
   months: getMonthsData(),
+  selectedDay: {},
   selectedMonth: parseInt(moment().format("M")),
-  selectedDay: {}
+  selectedReminder: {}
 };
 
 export default (state = initialState, action) => {
@@ -21,6 +24,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedDay: payload
+      };
+
+    case SELECT_REMINDER:
+      return {
+        ...state,
+        selectedReminder: payload
       };
 
     case UPDATE_SELECTED_MONTH:
@@ -58,9 +67,29 @@ export default (state = initialState, action) => {
               if (day.id === state.selectedDay.id)
                 return {
                   ...day,
-                  reminders: day.reminders.filter(
-                    reminder => reminder.id !== payload
-                  )
+                  reminders: day.reminders.filter(reminder => reminder.id !== payload)
+                };
+              return day;
+            });
+            return { ...month, days };
+          }
+          return month;
+        })
+      };
+
+    case UPDATE_REMINDER:
+      return {
+        ...state,
+        months: state.months.map(month => {
+          if (month.number === state.selectedMonth) {
+            const days = month.days.map(day => {
+              if (day.id === state.selectedDay.id)
+                return {
+                  ...day,
+                  reminders: day.reminders.map(reminder => {
+                    if (reminder.id === payload.id) return payload;
+                    return reminder;
+                  })
                 };
               return day;
             });
