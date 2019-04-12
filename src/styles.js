@@ -1,4 +1,14 @@
 import styled from "styled-components";
+import ColorPicker from "rc-color-picker";
+import { Input } from "antd";
+
+export const Header = styled.header`
+  background-color: #282c34;
+  display: flex;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
 
 export const Nav = styled.div`
   text-align: center;
@@ -49,6 +59,12 @@ export const DeleteReminder = styled.div`
   cursor: pointer;
 `;
 
+export const ReminderContainer = styled.div`
+  height: 90px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
+
 export const Reminder = styled.div`
   align-items: center;
   border-radius: 20px;
@@ -57,8 +73,28 @@ export const Reminder = styled.div`
   justify-content: space-between;
   margin-bottom: 5px;
   padding: 5px 10px;
+  font-size: 12px;
+  color: white;
 `;
 
-export const Description = styled.div`
+export const ColorPickerReminder = styled(ColorPicker)`
+  margin: 10px 0;
+  display: block;
+  & > span {
+    width: 100px;
+  }
+`;
+
+export const InputStyled = styled(Input)`
+  margin-bottom: 10px !important;
+`;
+
+export const Description = styled.p`
   display: inline-block;
+  width: 110px;
+  margin-top: 4px;
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

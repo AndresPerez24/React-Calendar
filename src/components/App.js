@@ -3,11 +3,23 @@ import { Button } from "antd";
 import { connect } from "react-redux";
 import ReminderModal from "../components/ReminderModal";
 import Day from "../components/Day";
-import { updateSelectedMonth, addReminder, selectDay } from "../actions/calendarAction";
-import { Nav, Container, Month, DayTitle, Calendar } from "../styles";
+import {
+  updateSelectedMonth,
+  addReminder,
+  selectDay
+} from "../actions/calendarAction";
+import { Nav, Container, Month, DayTitle, Calendar, Header } from "../styles";
 import "../App.scss";
 
-const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const daysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
 
 class App extends Component {
   state = {
@@ -29,18 +41,22 @@ class App extends Component {
     const { visible } = this.state;
 
     return (
-      <div className="App">
+      <div>
         <Container>
           <Nav>
-            <Button onClick={() => updateSelectedMonth(month.number - 1)}>Previous</Button>
+            <Button onClick={() => updateSelectedMonth(month.number - 1)}>
+              Previous
+            </Button>
             <Month>{month.name}</Month>
-            <Button onClick={() => updateSelectedMonth(month.number + 1)}>Next</Button>
+            <Button onClick={() => updateSelectedMonth(month.number + 1)}>
+              Next
+            </Button>
           </Nav>
-          <header className="App-header">
+          <Header>
             {daysOfWeek.map(day => (
               <DayTitle key={day}>{day}</DayTitle>
             ))}
-          </header>
+          </Header>
           <Calendar>
             {month.days.map(day => (
               <Day key={day.id} data={day} showModal={this.showModal} />

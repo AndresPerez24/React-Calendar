@@ -2,7 +2,15 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { Button, Icon } from "antd";
 import moment from "moment";
-import { DayBlock, Number, DeleteReminder, Reminder, Description, DayHeader } from "../styles";
+import {
+  DayBlock,
+  Number,
+  DeleteReminder,
+  Reminder,
+  Description,
+  DayHeader,
+  ReminderContainer
+} from "../styles";
 import { deleteReminder } from "../actions/calendarAction";
 
 function Day({ data, showModal, deleteReminder }) {
@@ -13,18 +21,29 @@ function Day({ data, showModal, deleteReminder }) {
         <Fragment>
           <DayHeader>
             <Number>{number}</Number>
-            <Button onClick={() => showModal(data)} type="primary" shape="circle" icon="plus" size="small" />
+            <Button
+              onClick={() => showModal(data)}
+              type="primary"
+              shape="circle"
+              icon="plus"
+              size="small"
+            />
           </DayHeader>
-          {reminders.map(({ text, time, color, id }) => (
-            <Reminder key={id} style={{ backgroundColor: color }}>
-              <div>
-                <span>{moment(time).format("hh:mm")}</span> - <Description>{text}</Description>
-              </div>
-              <DeleteReminder onClick={() => deleteReminder(id)}>
-                <Icon type="close" />
-              </DeleteReminder>
-            </Reminder>
-          ))}
+          <ReminderContainer>
+            {reminders.map(({ text, time, color, id }) => (
+              <Reminder key={id} style={{ backgroundColor: color }}>
+                <div>
+                  <Description>
+                    {moment(time).format("hh:mm")}
+                    {" - "} {text}
+                  </Description>
+                </div>
+                <DeleteReminder onClick={() => deleteReminder(id)}>
+                  <Icon type="close" />
+                </DeleteReminder>
+              </Reminder>
+            ))}
+          </ReminderContainer>
         </Fragment>
       )}
     </DayBlock>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Modal, Input, TimePicker } from "antd";
-import ColorPicker from "rc-color-picker";
+import { Modal, Input, TimePicker, Form } from "antd";
 import { addReminder } from "../actions/calendarAction";
+import { ColorPickerReminder, InputStyled } from "../styles";
 
 class ReminderModal extends Component {
   state = {
@@ -43,13 +43,43 @@ class ReminderModal extends Component {
 
   render() {
     const { text, time, color } = this.state;
-    const { visible } = this.props;
+    const { visible, getFieldDecorator } = this.props;
+
+    const config = {
+      rules: [
+        { type: "object", required: true, message: "Please select time!" }
+      ]
+    };
 
     return (
-      <Modal title="Modal" visible={visible} onOk={this.handleOk} onCancel={this.onCancel} okText="Ok" cancelText="Cancel">
-        <Input value={text} name="text" onChange={this.onChangeText} placeholder="Write your Reminder here" />
-        <TimePicker use12Hours value={time} onChange={this.onChangeTime} format="HH:mm a" />
-        <ColorPicker color={color} animation="slide-up" onChange={this.onChangeColor} />
+      <Modal
+        title="Reminder"
+        visible={visible}
+        onOk={this.handleOk}
+        onCancel={this.onCancel}
+        okText="Ok"
+        cancelText="Cancel"
+      >
+        <Form onSubmit={this.handleSubmit}>
+          <InputStyled
+            value={text}
+            name="text"
+            onChange={this.onChangeText}
+            placeholder="Write your Reminder here"
+            maxlength="30"
+          />
+          <TimePicker
+            use12Hours
+            value={time}
+            onChange={this.onChangeTime}
+            format="HH:mm a"
+          />
+          <ColorPickerReminder
+            color={color}
+            animation="slide-up"
+            onChange={this.onChangeColor}
+          />
+        </Form>
       </Modal>
     );
   }
